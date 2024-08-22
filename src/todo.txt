@@ -1,0 +1,5 @@
+- implementar regra de negócio dos métodos emprestar, devolver e reservar dos usuarios
+- Regra de negócio dos métodos de Reserva
+- Regra de negócio dos métodos de Emprestimo
+- Implementar lerComando() em Console
+- Parei em RegraEmprestimo
