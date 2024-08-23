@@ -5,7 +5,7 @@ import Biblioteca.Livro;
 public class RegraLivroJaEmprestado implements RegraEmprestimo{
     @Override
     public boolean validar(Livro livro, Usuario usuario) {
-        return !Usuario.jaTemLivroIgualEmprestado(livro);
+        return !usuario.jaTemLivroIgualEmprestado(livro);
     }
 
     @Override

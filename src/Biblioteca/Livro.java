@@ -87,10 +87,6 @@ public class Livro {
     }
 
     public void emprestar() {
-        if (exemplares > 0) {
-            exemplares--;
-        } else {
-            System.out.println("Nenhum exemplar disponível.");
-        }
+        this.exemplares--;
     }
 }
