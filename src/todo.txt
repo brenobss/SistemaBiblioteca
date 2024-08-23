@@ -1,5 +1,4 @@
-- implementar regra de negócio dos métodos emprestar, devolver e reservar dos usuarios
-- Regra de negócio dos métodos de Reserva
-- Regra de negócio dos métodos de Emprestimo
-- Implementar lerComando() em Console
-- Parei em RegraEmprestimo
+ Implementei as regras de negócio de emprestar e devolver livro, usando strategy para gerenciar as regra de emprestimo
+ Falta:
+ - Padrão command
+ - Padrão observer

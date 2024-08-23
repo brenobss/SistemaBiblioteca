@@ -1,6 +1,7 @@
 package Biblioteca;
 
 import java.util.List;
+import Observador.Observador;
 
 public class Livro {
     private final int codigo;
@@ -9,34 +10,26 @@ public class Livro {
     private List<String> autores;
     private int edicao;
     private int anoPublicacao;
-    private List<Exemplar> exemplares;
-    private List<Reserva> reservas;
+    private int exemplares;
     private List<Observador> observadores;
 
-    public Livro(int anoPublicacao, int edicao, List<String> autores, String editora, String titulo, int codigo) {
+    public Livro(int anoPublicacao, int edicao, List<String> autores, String editora, String titulo, int codigo, int exemplares) {
         this.anoPublicacao = anoPublicacao;
         this.edicao = edicao;
         this.autores = autores;
         this.editora = editora;
         this.titulo = titulo;
         this.codigo = codigo;
+        this.exemplares = exemplares;
     }
 
-    public void adicionarExemplar(Exemplar exemplar){
-        exemplares.add(exemplar);
-    }
-
-    public void removerExemplar(Exemplar exemplar){
-        exemplares.remove(exemplar);
-    }
-
-    public void adicionarReserva(Reserva reserva){
-        reservas.add(reserva);
-    }
-
-    public void removerReserva(Reserva reserva){
-        reservas.remove(reserva);
-    }
+//    public void adicionarExemplar(Exemplar exemplar){
+//        exemplares.add(exemplar);
+//    }
+//
+//    public void removerExemplar(Exemplar exemplar){
+//        exemplares.remove(exemplar);
+//    }
 
     public void notificarObservadores(){
         //notifica observadores caso um livro tenha mais de duas reservas
@@ -84,5 +77,20 @@ public class Livro {
 
     public void setAnoPublicacao(int anoPublicacao) {
         this.anoPublicacao = anoPublicacao;
+    }
+
+    public int getExemplares(){
+        return exemplares;
+    }
+    public void devolver() {
+        this.exemplares++;
+    }
+
+    public void emprestar() {
+        if (exemplares > 0) {
+            exemplares--;
+        } else {
+            System.out.println("Nenhum exemplar disponível.");
+        }
     }
 }

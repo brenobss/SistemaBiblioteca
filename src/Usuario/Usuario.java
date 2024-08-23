@@ -2,20 +2,30 @@ package Usuario;
 
 import Biblioteca.Emprestimo;
 import Biblioteca.Livro;
-import Biblioteca.Reserva;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Usuario {
-    private int id;
-    private String nome;
-    private List<Emprestimo> emprestimos;
-    private List<Reserva> reservas;
+public interface Usuario {
+    List<Emprestimo> emprestimos = new ArrayList<>();
 
-    public void fazerEmprestimoLivro(Livro livro){
+    public boolean temLivroAtrasado();
+    public boolean aindaPodePegarLivro();
 
-    }
-    public void devolverLivro(Livro livro){}
-    public void reservarLivro(Livro livro){}
-    public void notificar(String mensagem){}
+    public void fazerEmprestimo(Emprestimo emprestimo);
+
+    public void devolverLivro(Emprestimo emprestimo);
+
+    public boolean jaTemLivroIgualEmprestado(Livro livro);
+
+    public int prazoEmprestimo();
+
+    //public void reservarLivro(Livro livro);
+
+    //public void notificar(String mensagem);
+
+//    public Emprestimo buscarEmprestimo(Livro livro);
+
+
+    //public List<Livro> getReservas();
 }
