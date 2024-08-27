@@ -2,12 +2,13 @@ package Usuario;
 
 import Biblioteca.Emprestimo;
 import Biblioteca.Livro;
+import Observador.Observador;
 import RegraEmprestimo.RegraEmprestimo;
 import Reserva.Reserva;
 
 import java.util.List;
 
-public class AlunoGraduacao implements Usuario {
+public class AlunoGraduacao implements Usuario, Observador {
     private int id;
     private String nome;
 
@@ -84,6 +85,11 @@ public class AlunoGraduacao implements Usuario {
     @Override
     public void removerReserva(Reserva reservaParaRemover) {
         reservas.remove(reservaParaRemover);
+    }
+
+    @Override
+    public void atualizar(Livro livro) {
+        System.out.println("Aluno de Graduação " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
     }
 
 }

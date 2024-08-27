@@ -1,5 +1,8 @@
 package Biblioteca;
 
+import ComportamentoEmprestar.ComportamentoEmprestimo;
+import Observador.Observador;
+import Observador.Observavel;
 import Usuario.Usuario;
 import Reserva.Reserva;
 
@@ -7,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import RegraEmprestimo.*;
 
-public class Biblioteca {
+public class Biblioteca implements Observavel {
     private List<Livro> livros;
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
     private List<RegraEmprestimo> regras;
     private List<Reserva> reservas;
+    private List<Observador> observadores;
+    private ComportamentoEmprestimo comportamentoEmprestimo;
 
     public Biblioteca() {
         this.regras = new ArrayList<>();
@@ -20,6 +25,24 @@ public class Biblioteca {
         this.regras.add(new RegraLimiteEmprestimos());
         this.regras.add(new RegraLivroAtrasado());
         this.regras.add(new RegraLivroJaEmprestado());
+        this.observadores = new ArrayList<>();
+    }
+
+    @Override
+    public void adicionarObservador(Observador observador) {
+        observadores.add(observador);
+    }
+
+    @Override
+    public void removerObservador(Observador observador) {
+        observadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservadores(Livro livro) {
+        for (Observador observador : observadores) {
+            observador.atualizar(livro);
+        }
     }
 
     public void adicionarLivro(Livro livro){
@@ -41,21 +64,7 @@ public class Biblioteca {
             }
         }
 
-        if (jaTemReserva(usuario, livro)) {
-            Reserva reserva = buscarReserva(livro);
-            if (reserva != null && !reserva.getUsuario().equals(usuario)) {
-                System.out.println("Outro usuário tem prioridade de reserva sobre este livro.");
-                return;
-            }
-        }
-
-        int diasEmprestimo = usuario.prazoEmprestimo();
-        Emprestimo emprestimo = new Emprestimo(livro, usuario, diasEmprestimo);
-        emprestimos.add(emprestimo);
-        livro.emprestar();
-        usuario.fazerEmprestimo(emprestimo);
-        removerReserva(livro, usuario);
-        System.out.println("Livro emprestado com sucesso.");
+       comportamentoEmprestimo.emprestarLivro(livro, usuario, this);
 
     }
 
@@ -65,6 +74,7 @@ public class Biblioteca {
         usuario.devolverLivro(emprestimo);
         livro.devolver();
         System.out.println("Livro devolvido com sucesso.");
+        notificarObservadores(livro);
     }
 
     public Emprestimo buscarEmprestimo(Livro livro, Usuario usuario){
@@ -85,6 +95,7 @@ public class Biblioteca {
         this.reservas.add(reserva);
         usuario.adicionarReserva(reserva);
         System.out.println("Reserva feita com sucesso.");
+        notificarObservadores(livro);
     }
 
     public boolean jaTemReserva(Usuario usuario, Livro livro) {
@@ -119,4 +130,7 @@ public class Biblioteca {
     }
 
 
+    public void adicionarEmprestimo(Emprestimo emprestimo) {
+        emprestimos.add(emprestimo);
+    }
 }

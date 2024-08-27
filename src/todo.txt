@@ -14,4 +14,6 @@ Remove a reserva após o empréstimo ser realizado.
 A reserva é automaticamente removida do sistema quando o livro é emprestado ao usuário que fez a reserva.
 
 
- - Implementar observables
+Mudança em emprestimo:
+Para evitar o uso de instanceof, foi utilizado o padrão strategy para o comportamento de emprestar
+Então agora, o método emprestar da classe biblioteca apenas verifica as regras básicas de RegraEmprestimo e joga a responsabilidade de emprestar para ComportamentoEmprestimo

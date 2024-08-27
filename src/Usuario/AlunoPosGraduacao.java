@@ -1,11 +1,12 @@
 package Usuario;
 
 import Biblioteca.*;
+import Observador.Observador;
 import Reserva.Reserva;
 
 import java.util.List;
 
-public class AlunoPosGraduacao implements Usuario {
+public class AlunoPosGraduacao implements Usuario, Observador {
     private int id;
     private String nome;
 
@@ -67,5 +68,24 @@ public class AlunoPosGraduacao implements Usuario {
     @Override
     public void adicionarReserva(Reserva reserva) {
         reservas.add(reserva);
+    }
+
+    @Override
+    public boolean temReserva(Livro livro) {
+        for(Reserva r: reservas){
+            if(r.getLivro().equals(livro)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void removerReserva(Reserva reservaParaRemover) {
+        reservas.remove(reservaParaRemover);
+    }
+    @Override
+    public void atualizar(Livro livro) {
+        System.out.println("Aluno de Pós Graduação " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
     }
 }

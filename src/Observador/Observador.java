@@ -1,5 +1,7 @@
 package Observador;
 
+import Biblioteca.Livro;
+
 public interface Observador {
-    void atualizar(String mensagem);
+    void atualizar(Livro livro);
 }
