@@ -3,14 +3,13 @@ package Usuario;
 import Biblioteca.Emprestimo;
 import Biblioteca.Livro;
 import RegraEmprestimo.RegraEmprestimo;
+import Reserva.Reserva;
 
 import java.util.List;
 
 public class AlunoGraduacao implements Usuario {
     private int id;
     private String nome;
-    private List<Livro> reservas;
-    private List<Emprestimo> emprestimos;
 
     public AlunoGraduacao(String nome) {
         this.nome = nome;
@@ -60,6 +59,31 @@ public class AlunoGraduacao implements Usuario {
     @Override
     public int prazoEmprestimo() {
         return 3;
+    }
+
+    @Override
+    public int totalReservas() {
+        return reservas.size();
+    }
+
+    @Override
+    public void adicionarReserva(Reserva reserva) {
+        reservas.add(reserva);
+    }
+
+    @Override
+    public boolean temReserva(Livro livro) {
+        for(Reserva r: reservas){
+            if(r.getLivro().equals(livro)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void removerReserva(Reserva reservaParaRemover) {
+        reservas.remove(reservaParaRemover);
     }
 
 }

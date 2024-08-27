@@ -1,6 +1,7 @@
 package Biblioteca;
 
 import Usuario.Usuario;
+import Reserva.Reserva;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class Biblioteca {
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
     private List<RegraEmprestimo> regras;
+    private List<Reserva> reservas;
 
     public Biblioteca() {
         this.regras = new ArrayList<>();
@@ -39,14 +41,24 @@ public class Biblioteca {
             }
         }
 
+        if (jaTemReserva(usuario, livro)) {
+            Reserva reserva = buscarReserva(livro);
+            if (reserva != null && !reserva.getUsuario().equals(usuario)) {
+                System.out.println("Outro usuário tem prioridade de reserva sobre este livro.");
+                return;
+            }
+        }
+
         int diasEmprestimo = usuario.prazoEmprestimo();
         Emprestimo emprestimo = new Emprestimo(livro, usuario, diasEmprestimo);
         emprestimos.add(emprestimo);
         livro.emprestar();
         usuario.fazerEmprestimo(emprestimo);
+        removerReserva(livro, usuario);
         System.out.println("Livro emprestado com sucesso.");
 
     }
+
     public void devolverLivro(Livro livro, Usuario usuario) {
         Emprestimo emprestimo = buscarEmprestimo(livro, usuario);
         emprestimos.remove(emprestimo);
@@ -54,12 +66,6 @@ public class Biblioteca {
         livro.devolver();
         System.out.println("Livro devolvido com sucesso.");
     }
-//    public void reservarLivro(Livro livro, Usuario usuario) {
-//        usuario.reservarLivro(livro);
-//    }
-//    public void notificarObservadores(Livro livro){
-//        //notifica observadores caso um livro tenha mais de duas reservas
-//    }
 
     public Emprestimo buscarEmprestimo(Livro livro, Usuario usuario){
         for(Emprestimo e: emprestimos){
@@ -69,4 +75,48 @@ public class Biblioteca {
         }
         return null;
     }
+
+    public void fazerReserva(Usuario usuario, Livro livro){
+        if(jaTemReserva(usuario, livro)){
+            System.out.println("O usuário já possui uma reserva para este livro.");
+            return;
+        }
+        Reserva reserva = new Reserva(usuario, livro);
+        this.reservas.add(reserva);
+        usuario.adicionarReserva(reserva);
+        System.out.println("Reserva feita com sucesso.");
+    }
+
+    public boolean jaTemReserva(Usuario usuario, Livro livro) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getUsuario().equals(usuario) && reserva.getLivro().equals(livro)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Reserva buscarReserva(Livro livro) {
+        for (Reserva reserva : reservas) {
+            if (reserva.getLivro().equals(livro)) {
+                return reserva;
+            }
+        }
+        return null;
+    }
+
+    public void removerReserva(Livro livro, Usuario usuario){
+        Reserva reservaParaRemover = null;
+        for(Reserva r: reservas){
+            if(r.getLivro().equals(livro) && r.getUsuario().equals(usuario)){
+                reservaParaRemover = r;
+            }
+        }
+        if(reservaParaRemover != null){
+            reservas.remove(reservaParaRemover);
+            usuario.removerReserva(reservaParaRemover);
+        }
+    }
+
+
 }

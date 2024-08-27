@@ -1,14 +1,13 @@
 package Usuario;
 
 import Biblioteca.*;
+import Reserva.Reserva;
 
 import java.util.List;
 
 public class AlunoPosGraduacao implements Usuario {
     private int id;
     private String nome;
-    private List<Livro> reservas;
-    private List<Emprestimo> emprestimos;
 
     public AlunoPosGraduacao(String nome) {
         this.nome = nome;
@@ -58,5 +57,15 @@ public class AlunoPosGraduacao implements Usuario {
     @Override
     public int prazoEmprestimo() {
         return 5;
+    }
+
+    @Override
+    public int totalReservas() {
+        return reservas.size();
+    }
+
+    @Override
+    public void adicionarReserva(Reserva reserva) {
+        reservas.add(reserva);
     }
 }

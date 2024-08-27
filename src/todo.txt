@@ -2,3 +2,16 @@
  Falta:
  - Padrão command
  - Padrão observer
+
+Sobre reservas:
+
+Verifica se o usuário já tem uma reserva para o mesmo livro antes de criar uma nova reserva.
+Cria a reserva e a adiciona à lista de reservas da biblioteca e do usuário.
+Emprestar Livro com Prioridade de Reserva:
+Verifica se o usuário tem uma reserva para o livro antes de emprestá-lo.
+Garante que o usuário que fez a reserva tem prioridade sobre outros usuários.
+Remove a reserva após o empréstimo ser realizado.
+A reserva é automaticamente removida do sistema quando o livro é emprestado ao usuário que fez a reserva.
+
+
+ - Implementar observables

@@ -2,12 +2,14 @@ package Usuario;
 
 import Biblioteca.Emprestimo;
 import Biblioteca.Livro;
+import Reserva.Reserva;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface Usuario {
     List<Emprestimo> emprestimos = new ArrayList<>();
+    List<Reserva> reservas = new ArrayList<>();
 
     public boolean temLivroAtrasado();
     public boolean aindaPodePegarLivro();
@@ -19,6 +21,14 @@ public interface Usuario {
     public boolean jaTemLivroIgualEmprestado(Livro livro);
 
     public int prazoEmprestimo();
+
+    public int totalReservas();
+
+    public void adicionarReserva(Reserva reserva);
+
+    public boolean temReserva(Livro livro);
+
+    void removerReserva(Reserva reservaParaRemover);
 
     //public void reservarLivro(Livro livro);
 
