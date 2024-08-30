@@ -39,7 +39,8 @@ public class Biblioteca implements Observavel {
     }
 
     @Override
-    public void notificarObservadores(Livro livro) {
+    public void notificarObservadores(int codigoLivro) {
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
         for (Observador observador : observadores) {
             observador.atualizar(livro);
         }
@@ -55,8 +56,9 @@ public class Biblioteca implements Observavel {
     public void registrarUsuario(Usuario usuario){
         usuarios.add(usuario);
     }
-    public void emprestarLivro(Livro livro, Usuario usuario) {
-
+    public void emprestarLivro(int codigoLivro, int codigoUsuario) {
+        Usuario usuario = buscarUsuarioPorCodigo(codigoUsuario);
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
         for (RegraEmprestimo regra : regras) {
             if (!regra.validar(livro, usuario)) {
                 System.out.println(regra.mensagemErro());
@@ -68,25 +70,66 @@ public class Biblioteca implements Observavel {
 
     }
 
-    public void devolverLivro(Livro livro, Usuario usuario) {
-        Emprestimo emprestimo = buscarEmprestimo(livro, usuario);
+    public void devolverLivro(int codigoLivro, int codigoUsuario) {
+        Emprestimo emprestimo = buscarEmprestimo(codigoLivro, codigoUsuario);
         emprestimos.remove(emprestimo);
+        Usuario usuario = buscarUsuarioPorCodigo(codigoUsuario);
         usuario.devolverLivro(emprestimo);
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
         livro.devolver();
         System.out.println("Livro devolvido com sucesso.");
-        notificarObservadores(livro);
+        notificarObservadores(codigoLivro);
     }
 
-    public Emprestimo buscarEmprestimo(Livro livro, Usuario usuario){
+    public Emprestimo buscarEmprestimo(int codigoLivro, int codigoUsuario){
         for(Emprestimo e: emprestimos){
-            if(e.getLivro().equals(livro) && e.getUsuario().equals(usuario)){
+            if(e.getLivro().getCodigo() == codigoLivro && e.getUsuario().getId() == codigoUsuario){
                 return e;
             }
         }
         return null;
     }
 
-    public void fazerReserva(Usuario usuario, Livro livro){
+    public void consultarLivroPorCodigo(int codigoLivro){
+        for(Livro livro: livros){
+            if(livro.getCodigo() == codigoLivro){
+                System.out.println("Livro encontrado com sucesso.");
+               // System.out.println(Detalhes do livro);
+            }
+        }
+
+    }
+
+    public void consultarUsuarioPorCodigo(int codigoUsuario){
+        for(Usuario usuario: usuarios){
+            if(usuario.getId() == codigoUsuario){
+                System.out.println("Usuario encontrado com sucesso.");
+                // System.out.println(Detalhes do usuario);
+            }
+        }
+    }
+
+    public Usuario buscarUsuarioPorCodigo(int codigoUsuario){
+        for(Usuario usuario: usuarios){
+            if(usuario.getId() == codigoUsuario){
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    public Livro buscarLivroPorCodigo(int codigoLivro){
+        for(Livro livro: livros){
+            if(livro.getCodigo() == codigoLivro){
+                return livro;
+            }
+        }
+        return null;
+    }
+
+    public void fazerReserva(int codigoUsuario, int codigoLivro){
+        Usuario usuario = buscarUsuarioPorCodigo(codigoUsuario);
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
         if(jaTemReserva(usuario, livro)){
             System.out.println("O usuário já possui uma reserva para este livro.");
             return;
@@ -95,7 +138,7 @@ public class Biblioteca implements Observavel {
         this.reservas.add(reserva);
         usuario.adicionarReserva(reserva);
         System.out.println("Reserva feita com sucesso.");
-        notificarObservadores(livro);
+        notificarObservadores(codigoLivro);
     }
 
     public boolean jaTemReserva(Usuario usuario, Livro livro) {

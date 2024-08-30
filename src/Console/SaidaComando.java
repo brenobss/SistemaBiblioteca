@@ -1,6 +1,6 @@
 package Console;
 
-public class ConsultaComando implements Comando{
+public class SaidaComando implements Comando{
     @Override
     public void executar() {
 

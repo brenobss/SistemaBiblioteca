@@ -30,6 +30,9 @@ public interface Usuario {
 
     void removerReserva(Reserva reservaParaRemover);
 
+    public int getId();
+    public void setId(int id);
+
     //public void reservarLivro(Livro livro);
 
     //public void notificar(String mensagem);

@@ -92,4 +92,13 @@ public class AlunoGraduacao implements Usuario, Observador {
         System.out.println("Aluno de Graduação " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
 }
