@@ -1,7 +1,9 @@
 package Biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
 import Observador.Observador;
+import Usuario.Usuario;
 
 public class Livro {
     private final int codigo;
@@ -21,6 +23,7 @@ public class Livro {
         this.titulo = titulo;
         this.codigo = codigo;
         this.exemplares = exemplares;
+        this.observadores = new ArrayList<Observador>();
     }
 
 //    public void adicionarExemplar(Exemplar exemplar){
@@ -33,6 +36,10 @@ public class Livro {
 
     public void notificarObservadores(){
         //notifica observadores caso um livro tenha mais de duas reservas
+    }
+
+    public void adicionarObservador(Observador usuario){
+        this.observadores.add(usuario);
     }
 
     public int getCodigo() {

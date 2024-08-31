@@ -29,8 +29,11 @@ public class Biblioteca implements Observavel {
     }
 
     @Override
-    public void adicionarObservador(Observador observador) {
-        observadores.add(observador);
+    public void adicionarObservador(int codigoUsuario, int codigoLivro) {
+        Usuario professor = buscarUsuarioPorCodigo(codigoUsuario);
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
+        observadores.add(professor);
+        livro.adicionarObservador(professor);
     }
 
     @Override
@@ -41,8 +44,17 @@ public class Biblioteca implements Observavel {
     @Override
     public void notificarObservadores(int codigoLivro) {
         Livro livro = buscarLivroPorCodigo(codigoLivro);
-        for (Observador observador : observadores) {
-            observador.atualizar(livro);
+        int quantidadeReservas = 0;
+        for (Reserva reserva : reservas) {
+            if (reserva.getLivro().equals(livro)) {
+                quantidadeReservas++;
+            }
+        }
+
+        if (quantidadeReservas > 2) {
+            for (Observador observador : observadores) {
+                observador.atualizar(livro);
+            }
         }
     }
 

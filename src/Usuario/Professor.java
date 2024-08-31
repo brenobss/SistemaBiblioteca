@@ -7,9 +7,11 @@ import Reserva.Reserva;
 public class Professor implements Usuario, Observador {
     private int id;
     private String nome;
+    private int notificacoes = 0;
 
-    public Professor(String nome) {
+    public Professor(String nome, int id) {
         this.nome = nome;
+        this.id = id;
     }
 
     @Override
@@ -81,7 +83,18 @@ public class Professor implements Usuario, Observador {
     }
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
+    }
+
+    @Override
     public void atualizar(Livro livro) {
         System.out.println("Professor " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
+        notificacoes ++;
     }
 }

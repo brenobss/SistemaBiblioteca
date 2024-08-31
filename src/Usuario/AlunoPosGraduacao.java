@@ -6,12 +6,13 @@ import Reserva.Reserva;
 
 import java.util.List;
 
-public class AlunoPosGraduacao implements Usuario, Observador {
+public class AlunoPosGraduacao implements Usuario {
     private int id;
     private String nome;
 
-    public AlunoPosGraduacao(String nome) {
+    public AlunoPosGraduacao(String nome, int id) {
         this.nome = nome;
+        this.id = id;
     }
 
     @Override
@@ -84,8 +85,15 @@ public class AlunoPosGraduacao implements Usuario, Observador {
     public void removerReserva(Reserva reservaParaRemover) {
         reservas.remove(reservaParaRemover);
     }
+
     @Override
-    public void atualizar(Livro livro) {
-        System.out.println("Aluno de Pós Graduação " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
+    public int getId() {
+        return 0;
     }
+
+    @Override
+    public void setId(int id) {
+
+    }
+
 }
