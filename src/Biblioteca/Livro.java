@@ -2,10 +2,9 @@ package Biblioteca;
 
 import java.util.ArrayList;
 import java.util.List;
-import Observador.Observador;
-import Usuario.Usuario;
+import Observador.*;
 
-public class Livro {
+public class Livro implements Observavel {
     private final int codigo;
     private String titulo;
     private String editora;
@@ -23,23 +22,28 @@ public class Livro {
         this.titulo = titulo;
         this.codigo = codigo;
         this.exemplares = exemplares;
-        this.observadores = new ArrayList<Observador>();
+        this.observadores = new ArrayList<>();
     }
 
-//    public void adicionarExemplar(Exemplar exemplar){
-//        exemplares.add(exemplar);
-//    }
-//
-//    public void removerExemplar(Exemplar exemplar){
-//        exemplares.remove(exemplar);
-//    }
-
+    @Override
     public void notificarObservadores(){
-        //notifica observadores caso um livro tenha mais de duas reservas
+        for (Observador observador : observadores) {
+            observador.atualizar(this);
+        }
     }
 
-    public void adicionarObservador(Observador usuario){
-        this.observadores.add(usuario);
+    @Override
+    public void adicionarObservador(Observador observador){
+        this.observadores.add(observador);
+    }
+
+    @Override
+    public void removerObservador(Observador observador){
+        this.observadores.remove(observador);
+    }
+
+    public List<Observador> listarObservadores() {
+        return this.observadores;
     }
 
     public int getCodigo() {

@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import RegraEmprestimo.*;
 
-public class Biblioteca implements Observavel {
+public class Biblioteca {
     private List<Livro> livros;
     private List<Usuario> usuarios;
     private List<Emprestimo> emprestimos;
     private List<RegraEmprestimo> regras;
     private List<Reserva> reservas;
-    private List<Observador> observadores;
     private ComportamentoEmprestimo comportamentoEmprestimo;
 
     public Biblioteca() {
@@ -25,23 +24,22 @@ public class Biblioteca implements Observavel {
         this.regras.add(new RegraLimiteEmprestimos());
         this.regras.add(new RegraLivroAtrasado());
         this.regras.add(new RegraLivroJaEmprestado());
-        this.observadores = new ArrayList<>();
     }
 
-    @Override
     public void adicionarObservador(int codigoUsuario, int codigoLivro) {
-        Usuario professor = buscarUsuarioPorCodigo(codigoUsuario);
+        Observador observador = (Observador) buscarUsuarioPorCodigo(codigoUsuario);
         Livro livro = buscarLivroPorCodigo(codigoLivro);
-        observadores.add(professor);
-        livro.adicionarObservador(professor);
+        livro.adicionarObservador(observador);
+
     }
 
-    @Override
-    public void removerObservador(Observador observador) {
-        observadores.remove(observador);
+    public void removerObservador(int codigoUsuario, int codigoLivro) {
+        Observador observador = (Observador) buscarUsuarioPorCodigo(codigoUsuario);
+        Livro livro = buscarLivroPorCodigo(codigoLivro);
+        livro.removerObservador(observador);
     }
 
-    @Override
+
     public void notificarObservadores(int codigoLivro) {
         Livro livro = buscarLivroPorCodigo(codigoLivro);
         int quantidadeReservas = 0;
@@ -52,9 +50,7 @@ public class Biblioteca implements Observavel {
         }
 
         if (quantidadeReservas > 2) {
-            for (Observador observador : observadores) {
-                observador.atualizar(livro);
-            }
+            livro.notificarObservadores();
         }
     }
 
