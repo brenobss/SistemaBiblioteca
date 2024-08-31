@@ -4,10 +4,12 @@ import Biblioteca.*;
 import Observador.Observador;
 import Reserva.Reserva;
 
+import java.util.Map;
+
 public class Professor implements Usuario, Observador {
     private int id;
     private String nome;
-    private int notificacoes = 0;
+    private Map<Integer, Integer> notificacoesPorLivro;
 
     public Professor(String nome, int id) {
         this.nome = nome;
@@ -95,6 +97,20 @@ public class Professor implements Usuario, Observador {
     @Override
     public void atualizar(Livro livro) {
         System.out.println("Professor " + nome + " notificado: O livro '" + livro.getTitulo() + "' está disponível.");
-        notificacoes ++;
+        int codigoLivro = livro.getCodigo();
+        notificacoesPorLivro.put(codigoLivro, notificacoesPorLivro.getOrDefault(codigoLivro, 0) + 1);
+    }
+
+    @Override
+    public String getNotificacoes() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Notificações para o professor ").append(nome).append(":\n");
+
+        for (Map.Entry<Integer, Integer> entry : notificacoesPorLivro.entrySet()) {
+            sb.append("Código do Livro: ").append(entry.getKey())
+                    .append(" - Notificações: ").append(entry.getValue()).append("\n");
+        }
+
+        return sb.toString();
     }
 }

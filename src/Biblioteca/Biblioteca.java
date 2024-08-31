@@ -40,8 +40,7 @@ public class Biblioteca {
     }
 
 
-    public void notificarObservadores(int codigoLivro) {
-        Livro livro = buscarLivroPorCodigo(codigoLivro);
+    public void notificarObservadores(Livro livro) {
         int quantidadeReservas = 0;
         for (Reserva reserva : reservas) {
             if (reserva.getLivro().equals(livro)) {
@@ -52,6 +51,10 @@ public class Biblioteca {
         if (quantidadeReservas > 2) {
             livro.notificarObservadores();
         }
+    }
+    public void consultarNotificacoesObservadores(int codigoObservador) {
+        Observador observador = (Observador) buscarUsuarioPorCodigo(codigoObservador);
+        observador.getNotificacoes();
     }
 
     public void adicionarLivro(Livro livro){
@@ -86,7 +89,7 @@ public class Biblioteca {
         Livro livro = buscarLivroPorCodigo(codigoLivro);
         livro.devolver();
         System.out.println("Livro devolvido com sucesso.");
-        notificarObservadores(codigoLivro);
+        notificarObservadores(livro);
     }
 
     public Emprestimo buscarEmprestimo(int codigoLivro, int codigoUsuario){
@@ -146,7 +149,7 @@ public class Biblioteca {
         this.reservas.add(reserva);
         usuario.adicionarReserva(reserva);
         System.out.println("Reserva feita com sucesso.");
-        notificarObservadores(codigoLivro);
+        notificarObservadores(livro);
     }
 
     public boolean jaTemReserva(Usuario usuario, Livro livro) {

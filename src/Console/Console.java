@@ -3,7 +3,6 @@ package Console;
 import Biblioteca.Biblioteca;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Console {
     private static Console instancia;
@@ -23,7 +22,7 @@ public class Console {
         comandos.put("liv", new ConsultaLivroComando());
         comandos.put("obs", new ObservarComando());
         comandos.put("usu", new ConsultaUsuarioComando());
-        comandos.put("ntf", new NotificaComando());
+        comandos.put("ntf", new ConsultarNotificacoesComando());
         comandos.put("sai", new SaidaComando());
     }
 
