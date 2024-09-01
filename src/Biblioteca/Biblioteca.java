@@ -86,6 +86,7 @@ public class Biblioteca {
             if(exemplar.getEmprestimo().getUsuario().getId() == codigoUsuario){
                 exemplar.setDisponivel(true);
                 exemplar.getEmprestimo().getUsuario().devolverLivro(exemplar.getEmprestimo());
+                exemplar.getEmprestimo().setStatus("Concluído");
                 emprestimos.remove(exemplar.getEmprestimo());
                 System.out.println("Livro devolvido com sucesso.");
                 notificarObservadores(livro);
@@ -109,10 +110,18 @@ public class Biblioteca {
         for(Livro livro: livros){
             if(livro.getCodigo() == codigoLivro){
                 List<Reserva> reservasLivro = livro.getReservas();
+                System.out.println("Livro " + livro.getTitulo() + "encontrado com sucesso. Reservas desse livro: " + reservasLivro.size() );
                 for(Reserva reserva: reservasLivro){
-                    reserva.getUsuario().get
+                    System.out.println(reserva.getUsuario().getNome());
                 }
-                System.out.println("Livro " + livro.getTitulo() + "encontrado com sucesso. Reservas desse livro: " );
+                System.out.println("Exemplares:");
+                for(Exemplar exemplar: livro.getExemplares()){
+                    System.out.println("Código do Exemplar:" + exemplar.getCodigoExemplar() + ", Disponibilidade: " + exemplar.isDisponivel());
+                    if (!exemplar.isDisponivel()) {
+                        System.out.println("Este exemplar está emprestado para " + exemplar.getEmprestimo().getUsuario().getNome());
+                        System.out.println("Data do Emprestimo: " + exemplar.getEmprestimo().getDataEmprestimo() + ", Data da devolução: " + exemplar.getEmprestimo().getDataDevolucao());
+                    }
+                }
             }
         }
 

@@ -99,4 +99,14 @@ public class AlunoPosGraduacao implements Usuario {
 
     }
 
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public void setNome(String nome) {
+
+    }
+
 }

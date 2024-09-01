@@ -4,6 +4,7 @@ import Biblioteca.*;
 import Observador.Observador;
 import Reserva.Reserva;
 
+import java.util.List;
 import java.util.Map;
 
 public class Professor implements Usuario, Observador {
@@ -46,9 +47,12 @@ public class Professor implements Usuario, Observador {
 
     @Override
     public boolean jaTemLivroIgualEmprestado(Livro livro) {
-        for(Emprestimo e:emprestimos){
-            if(e.getLivro().equals(livro)){
-                return true;
+        List<Exemplar> exemplaresLivro = livro.getExemplares();
+        for(Emprestimo emprestimo : emprestimos){
+            for(Exemplar exemplar : exemplaresLivro){
+                if(emprestimo.getExemplar().getCodigoExemplar() == exemplar.getCodigoExemplar()){
+                    return true;
+                }
             }
         }
         return false;
@@ -91,6 +95,16 @@ public class Professor implements Usuario, Observador {
 
     @Override
     public void setId(int id) {
+
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public void setNome(String nome) {
 
     }
 

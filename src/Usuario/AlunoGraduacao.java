@@ -1,8 +1,11 @@
 package Usuario;
 
 import Biblioteca.Emprestimo;
+import Biblioteca.Exemplar;
 import Biblioteca.Livro;
 import Reserva.Reserva;
+
+import java.util.List;
 
 public class AlunoGraduacao implements Usuario {
     private int id;
@@ -46,9 +49,12 @@ public class AlunoGraduacao implements Usuario {
 
     @Override
     public boolean jaTemLivroIgualEmprestado(Livro livro) {
-        for(Emprestimo e:emprestimos){
-            if(e.getLivro().equals(livro)){
-                return true;
+        List<Exemplar> exemplaresLivro = livro.getExemplares();
+        for(Emprestimo emprestimo : emprestimos){
+            for(Exemplar exemplar : exemplaresLivro){
+                if(emprestimo.getExemplar().getCodigoExemplar() == exemplar.getCodigoExemplar()){
+                    return true;
+                }
             }
         }
         return false;
@@ -93,5 +99,14 @@ public class AlunoGraduacao implements Usuario {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
