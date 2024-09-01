@@ -3,6 +3,7 @@ package Biblioteca;
 import java.util.ArrayList;
 import java.util.List;
 import Observador.*;
+import Reserva.Reserva;
 
 public class Livro implements Observavel {
     private final int codigo;
@@ -11,18 +12,20 @@ public class Livro implements Observavel {
     private List<String> autores;
     private int edicao;
     private int anoPublicacao;
-    private int exemplares;
+    private List<Exemplar> exemplares;
     private List<Observador> observadores;
+    private List<Reserva> reservas;
 
-    public Livro(int anoPublicacao, int edicao, List<String> autores, String editora, String titulo, int codigo, int exemplares) {
+    public Livro(int anoPublicacao, int edicao, List<String> autores, String editora, String titulo, int codigo) {
         this.anoPublicacao = anoPublicacao;
         this.edicao = edicao;
         this.autores = autores;
         this.editora = editora;
         this.titulo = titulo;
         this.codigo = codigo;
-        this.exemplares = exemplares;
+        this.exemplares = new ArrayList<>();
         this.observadores = new ArrayList<>();
+        this.reservas = new ArrayList<>();
     }
 
     @Override
@@ -90,14 +93,53 @@ public class Livro implements Observavel {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public int getExemplares(){
+    public List<Exemplar> getExemplares(){
         return exemplares;
     }
-    public void devolver() {
-        this.exemplares++;
+    public void devolver(int codigoExemplar) {
+        for (Exemplar exemplar : exemplares) {
+            if(exemplar.getCodigoExemplar() == codigoExemplar) {
+                exemplar.setDisponivel(true);
+            }
+        }
     }
 
-    public void emprestar() {
-        this.exemplares--;
+    public void emprestar(int codigoExemplar) {
+        for (Exemplar exemplar : exemplares) {
+            if(exemplar.getCodigoExemplar() == codigoExemplar) {
+                exemplar.setDisponivel(false);
+            }
+        }
+    }
+
+    public void adicionarReserva(Reserva reserva) {
+        this.reservas.add(reserva);
+    }
+
+    public void removerReserva(Reserva reserva) {
+        this.reservas.remove(reserva);
+    }
+
+    public List<Reserva> getReservas(){
+        return reservas;
+    }
+
+    public Exemplar getExemplar(int codigoExemplar) {
+        for (Exemplar exemplar : exemplares) {
+            if(exemplar.getCodigoExemplar() == codigoExemplar) {
+                return exemplar;
+            }
+        }
+        return null;
+    }
+
+    public List<Exemplar> getExemplaresDisponiveis(){
+        List<Exemplar> exemplaresDisponiveis = new ArrayList<>();
+        for(Exemplar exemplar : exemplares) {
+            if(exemplar.isDisponivel()){
+                exemplaresDisponiveis.add(exemplar);
+            }
+        }
+        return exemplaresDisponiveis;
     }
 }

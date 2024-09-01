@@ -48,9 +48,12 @@ public class AlunoPosGraduacao implements Usuario {
 
     @Override
     public boolean jaTemLivroIgualEmprestado(Livro livro) {
-        for(Emprestimo e:emprestimos){
-            if(e.getLivro().equals(livro)){
-                return true;
+        List<Exemplar> exemplaresLivro = livro.getExemplares();
+        for(Emprestimo emprestimo : emprestimos){
+            for(Exemplar exemplar : exemplaresLivro){
+                if(emprestimo.getExemplar().getCodigoExemplar() == exemplar.getCodigoExemplar()){
+                    return true;
+                }
             }
         }
         return false;

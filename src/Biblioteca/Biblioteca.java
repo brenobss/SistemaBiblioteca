@@ -2,7 +2,6 @@ package Biblioteca;
 
 import ComportamentoEmprestar.ComportamentoEmprestimo;
 import Observador.Observador;
-import Observador.Observavel;
 import Usuario.Usuario;
 import Reserva.Reserva;
 
@@ -82,19 +81,24 @@ public class Biblioteca {
     }
 
     public void devolverLivro(int codigoLivro, int codigoUsuario) {
-        Emprestimo emprestimo = buscarEmprestimo(codigoLivro, codigoUsuario);
-        emprestimos.remove(emprestimo);
-        Usuario usuario = buscarUsuarioPorCodigo(codigoUsuario);
-        usuario.devolverLivro(emprestimo);
         Livro livro = buscarLivroPorCodigo(codigoLivro);
-        livro.devolver();
-        System.out.println("Livro devolvido com sucesso.");
-        notificarObservadores(livro);
+        for(Exemplar exemplar : livro.getExemplares()){
+            if(exemplar.getEmprestimo().getUsuario().getId() == codigoUsuario){
+                exemplar.setDisponivel(true);
+                exemplar.getEmprestimo().getUsuario().devolverLivro(exemplar.getEmprestimo());
+                emprestimos.remove(exemplar.getEmprestimo());
+                System.out.println("Livro devolvido com sucesso.");
+                notificarObservadores(livro);
+            } else{
+                System.out.println("Você não tem esse livro emprestado.");
+            }
+        }
+
     }
 
-    public Emprestimo buscarEmprestimo(int codigoLivro, int codigoUsuario){
+    public Emprestimo buscarEmprestimo(int codigoExemplar, int codigoUsuario){
         for(Emprestimo e: emprestimos){
-            if(e.getLivro().getCodigo() == codigoLivro && e.getUsuario().getId() == codigoUsuario){
+            if(e.getExemplar().getCodigoExemplar() == codigoExemplar && e.getUsuario().getId() == codigoUsuario){
                 return e;
             }
         }
@@ -104,8 +108,11 @@ public class Biblioteca {
     public void consultarLivroPorCodigo(int codigoLivro){
         for(Livro livro: livros){
             if(livro.getCodigo() == codigoLivro){
-                System.out.println("Livro encontrado com sucesso.");
-               // System.out.println(Detalhes do livro);
+                List<Reserva> reservasLivro = livro.getReservas();
+                for(Reserva reserva: reservasLivro){
+                    reserva.getUsuario().get
+                }
+                System.out.println("Livro " + livro.getTitulo() + "encontrado com sucesso. Reservas desse livro: " );
             }
         }
 
@@ -143,6 +150,12 @@ public class Biblioteca {
         Livro livro = buscarLivroPorCodigo(codigoLivro);
         if(jaTemReserva(usuario, livro)){
             System.out.println("O usuário já possui uma reserva para este livro.");
+            return;
+        }
+        List<Reserva> reservas = livro.getReservas();
+        List<Exemplar> exemplaresDisponiveis = livro.getExemplaresDisponiveis();
+        if(reservas.size() >= exemplaresDisponiveis.size()){
+            System.out.println("Esse livro não tem mais exemplares disponíveis");
             return;
         }
         Reserva reserva = new Reserva(usuario, livro);

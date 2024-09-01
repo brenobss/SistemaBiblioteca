@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Usuario {
+    String nome = "";
     List<Emprestimo> emprestimos = new ArrayList<>();
     List<Reserva> reservas = new ArrayList<>();
 

@@ -6,19 +6,19 @@ import java.time.LocalDate;
 
 public class Emprestimo {
     private Usuario usuario;
-    private Livro livro;
+    private Exemplar exemplar;
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
 
-    public Emprestimo(Livro livro, Usuario usuario, int prazoDevolucao) {
-        this.livro = livro;
+    public Emprestimo(Exemplar exemplar, Usuario usuario, int prazoDevolucao) {
+        this.exemplar = exemplar;
         this.usuario = usuario;
         this.dataEmprestimo = LocalDate.now();
         this.dataDevolucao = LocalDate.now().plusDays(prazoDevolucao);
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Exemplar getExemplar() {
+        return exemplar;
     }
 
     public Usuario getUsuario() {
