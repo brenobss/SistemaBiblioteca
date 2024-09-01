@@ -114,7 +114,7 @@ public class Biblioteca {
                 for(Reserva reserva: reservasLivro){
                     System.out.println(reserva.getUsuario().getNome());
                 }
-                System.out.println("Exemplares:");
+                System.out.println("Exemplares: ");
                 for(Exemplar exemplar: livro.getExemplares()){
                     System.out.println("Código do Exemplar:" + exemplar.getCodigoExemplar() + ", Disponibilidade: " + exemplar.isDisponivel());
                     if (!exemplar.isDisponivel()) {
@@ -130,6 +130,7 @@ public class Biblioteca {
     public void consultarUsuarioPorCodigo(int codigoUsuario){
         for(Usuario usuario: usuarios){
             if(usuario.getId() == codigoUsuario){
+                for(Emprestimo emprestimo: usuario.get){}
                 System.out.println("Usuario encontrado com sucesso.");
                 // System.out.println(Detalhes do usuario);
             }
@@ -165,6 +166,11 @@ public class Biblioteca {
         List<Exemplar> exemplaresDisponiveis = livro.getExemplaresDisponiveis();
         if(reservas.size() >= exemplaresDisponiveis.size()){
             System.out.println("Esse livro não tem mais exemplares disponíveis");
+            return;
+        }
+
+        if(usuario.totalReservas() > 3){
+            System.out.println("Esse usuário atingiu o limite máximo de reservas");
             return;
         }
         Reserva reserva = new Reserva(usuario, livro);
