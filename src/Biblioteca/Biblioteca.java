@@ -130,8 +130,11 @@ public class Biblioteca {
     public void consultarUsuarioPorCodigo(int codigoUsuario){
         for(Usuario usuario: usuarios){
             if(usuario.getId() == codigoUsuario){
-                for(Emprestimo emprestimo: usuario.get){}
                 System.out.println("Usuario encontrado com sucesso.");
+                List<Emprestimo> emprestimosUsuario = usuario.getEmprestimos();
+                listarEmprestimos(emprestimosUsuario);
+                List<Reserva> reservasUsuario = usuario.getReservas();
+                listarReservas(reservasUsuario);
                 // System.out.println(Detalhes do usuario);
             }
         }
@@ -210,7 +213,19 @@ public class Biblioteca {
             usuario.removerReserva(reservaParaRemover);
         }
     }
+    public void listarEmprestimos(List<Emprestimo> emprestimosUsuario){
+        for(Emprestimo emprestimo: emprestimosUsuario){
+            System.out.println("Título do livro:" + emprestimo.getExemplar().getTitulo());
+            System.out.println("Data  do empréstimo" + emprestimo.getDataEmprestimo());
+            System.out.println("Status: " + emprestimo.getStatus());
+        }
+    }
 
+    public void listarReservas(List<Reserva> reservasUsuario){
+        for(Reserva reserva: reservas){
+            System.out.println("Título do livro:" + reserva.getLivro().getTitulo() + ", data da reserva: " + reserva.getDataReserva());
+        }
+    }
 
     public void adicionarEmprestimo(Emprestimo emprestimo) {
         emprestimos.add(emprestimo);

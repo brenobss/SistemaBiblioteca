@@ -90,6 +90,16 @@ public class AlunoGraduacao implements Usuario {
         reservas.remove(reservaParaRemover);
     }
 
+    @Override
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
+
+    @Override
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
 
     @Override
     public int getId() {

@@ -31,6 +31,9 @@ public interface Usuario {
 
     void removerReserva(Reserva reservaParaRemover);
 
+    public List<Emprestimo> getEmprestimos();
+    public List<Reserva> getReservas();
+
     public int getId();
     public void setId(int id);
 

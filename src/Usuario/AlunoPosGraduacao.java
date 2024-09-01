@@ -90,6 +90,16 @@ public class AlunoPosGraduacao implements Usuario {
     }
 
     @Override
+    public List<Emprestimo> getEmprestimos() {
+        return emprestimos;
+    }
+
+    @Override
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    @Override
     public int getId() {
         return 0;
     }

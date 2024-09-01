@@ -1,11 +1,13 @@
 package Biblioteca;
 
 public class Exemplar {
+    private String titulo;
     private int codigoExemplar;
     private boolean disponivel;
     private Emprestimo emprestimo;
 
-    public Exemplar(boolean disponivel) {
+    public Exemplar(String titulo, boolean disponivel) {
+        this.titulo = titulo;
         this.disponivel = disponivel;
     }
 
@@ -31,5 +33,13 @@ public class Exemplar {
 
     public void setEmprestimo(Emprestimo emprestimo) {
         this.emprestimo = emprestimo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
