@@ -39,13 +39,4 @@ public interface Usuario {
 
     public String getNome();
     public void setNome(String nome);
-
-    //public void reservarLivro(Livro livro);
-
-    //public void notificar(String mensagem);
-
-//    public Emprestimo buscarEmprestimo(Livro livro);
-
-
-    //public List<Livro> getReservas();
 }

@@ -135,7 +135,6 @@ public class Biblioteca {
                 listarEmprestimos(emprestimosUsuario);
                 List<Reserva> reservasUsuario = usuario.getReservas();
                 listarReservas(reservasUsuario);
-                // System.out.println(Detalhes do usuario);
             }
         }
     }

@@ -14,8 +14,9 @@ public class EmprestimoAluno implements ComportamentoEmprestimo{
         if (biblioteca.jaTemReserva(usuario, livro)) {
             Reserva reserva = biblioteca.buscarReserva(livro);
             if (reserva != null && !reserva.getUsuario().equals(usuario)) {
-                System.out.println("Outro usuário tem prioridade de reserva sobre este livro.");
-                return;
+                if(livro.getReservas().size() >= livro.getExemplares().size())
+                    System.out.println("Não é possível fazer o empréstimo porque todos os exemplares desse livro estão reservados.");
+                    return;
             }
         }
         List<Exemplar> exemplaresDisponiveis = livro.getExemplaresDisponiveis();
